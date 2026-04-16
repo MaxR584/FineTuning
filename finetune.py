@@ -168,7 +168,9 @@ for i, record in enumerate(test_records):
     generated = tokenizer.decode(
         output_ids[0][inputs["input_ids"].shape[1]:],
         skip_special_tokens=True
+        spaces_between_special_tokens = True
     ).strip()
+    generated = generated.replace("_", " ").strip()
 
     results.append({
         "id":           record["messages"][0].get("id", i),
