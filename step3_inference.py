@@ -79,13 +79,23 @@ def extract_symptoms(body_text):
     return generated
 
 
+def fix_spacing(text):
+    """Fix missing spaces between words in model output."""
+    import re
+    # Add space before uppercase letters that follow lowercase
+    text = re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
+    # Add space between letters and numbers
+    text = re.sub(r'([a-zA-Z])(\d)', r'\1 \2', text)
+    text = re.sub(r'(\d)([a-zA-Z])', r'\1 \2', text)
+    return text
+
 def parse_model_output(raw_output):
     if not raw_output:
         return []
     try:
         result = json.loads(raw_output)
         if isinstance(result, list):
-            return result
+            return [fix_spacing(s) for s in result]
     except:
         pass
     match = re.search(r'\[.*?\]', raw_output, re.DOTALL)
@@ -93,7 +103,7 @@ def parse_model_output(raw_output):
         try:
             result = json.loads(match.group())
             if isinstance(result, list):
-                return result
+                return [fix_spacing(s) for s in result]
         except:
             pass
     return []
