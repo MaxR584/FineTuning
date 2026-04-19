@@ -7,11 +7,11 @@ import json
 import matplotlib.pyplot as plt
 import pandas as pd
 
-MODEL_NAME = "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
+MODEL_NAME = "Qwen/Qwen2.5-7B-Instruct"
 TRAIN_FILE    = "train.jsonl"
 VAL_FILE      = "val.jsonl"
 TEST_FILE     = "test.jsonl"
-OUTPUT_DIR    = "./deepseek_symptom_extraction"
+OUTPUT_DIR    = "./qwen_symptom_extraction"
 MAX_SEQ_LEN   = 1024
 LORA_R        = 16
 LORA_ALPHA    = 32
