@@ -32,6 +32,10 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit    = True,
 )
 
+tokenizer.padding_side = "right"
+if tokenizer.pad_token is None:
+    tokenizer.pad_token = tokenizer.eos_token
+
 print("Attaching LoRA adapters...")
 model = FastLanguageModel.get_peft_model(
     model,
@@ -59,7 +63,8 @@ def format_chat(example):
     text = tokenizer.apply_chat_template(
         example["messages"],
         tokenize=False,
-        add_generation_prompt=False
+        add_generation_prompt=False,
+        clean_up_tokenization_spaces = False
     )
     return {"text": text}
 
@@ -167,7 +172,7 @@ for i, record in enumerate(test_records):
 
     generated = tokenizer.decode(
         output_ids[0][inputs["input_ids"].shape[1]:],
-        skip_special_tokens=True
+        skip_special_tokens=True,
         spaces_between_special_tokens = True
     ).strip()
     generated = generated.replace("_", " ").strip()
