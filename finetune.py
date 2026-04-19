@@ -7,7 +7,7 @@ import json
 import matplotlib.pyplot as plt
 import pandas as pd
 
-MODEL_NAME    = "deepseek-ai/DeepSeek-V3.2:novita"
+MODEL_NAME = "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
 TRAIN_FILE    = "train.jsonl"
 VAL_FILE      = "val.jsonl"
 TEST_FILE     = "test.jsonl"
