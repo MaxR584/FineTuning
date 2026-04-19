@@ -14,7 +14,7 @@ import re
 from tqdm import tqdm
 
 # ── Config ────────────────────────────────────────────────────────────────────
-ADAPTER_DIR    = "./deepseek_symptom_extraction"
+ADAPTER_DIR    = "./qwen_symptom_extraction"
 TEST_FILE      = "test.jsonl"
 OUTPUT_CSV     = "test_predictions.csv"
 MAX_SEQ_LEN    = 1024
@@ -123,7 +123,7 @@ for i, record in enumerate(tqdm(test_records)):
         "id":           i,
         "input":        user_text,
         "ground_truth": ground_truth,
-        "prediction":   str(symptoms),
+        "prediction":   json.dumps(symptoms),
         "raw_output":   raw_output,
     })
 
