@@ -70,24 +70,14 @@ def extract_symptoms(body_text):
         )
 
     # Decode with spacing fix
-    generated = tokenizer.decode(
-        outputs[0][inputs["input_ids"].shape[1]:],
-        skip_special_tokens=True,
-        spaces_between_special_tokens=True,
-    ).strip().replace("▁", " ")
+    tokens = outputs[0][inputs["input_ids"].shape[1]:]
+    token_list = tokenizer.convert_ids_to_tokens(tokens)
+    generated = tokenizer.convert_tokens_to_string(token_list).strip()
+    match = re.search(r'\[.*?\]', generated, re.DOTALL)
+    generated = match.group() if match else "[]"
 
     return generated
 
-
-def fix_spacing(text):
-    """Fix missing spaces between words in model output."""
-    import re
-    # Add space before uppercase letters that follow lowercase
-    text = re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
-    # Add space between letters and numbers
-    text = re.sub(r'([a-zA-Z])(\d)', r'\1 \2', text)
-    text = re.sub(r'(\d)([a-zA-Z])', r'\1 \2', text)
-    return text
 
 def parse_model_output(raw_output):
     if not raw_output:
@@ -95,7 +85,7 @@ def parse_model_output(raw_output):
     try:
         result = json.loads(raw_output)
         if isinstance(result, list):
-            return [fix_spacing(s) for s in result]
+            return result
     except:
         pass
     match = re.search(r'\[.*?\]', raw_output, re.DOTALL)
@@ -103,7 +93,7 @@ def parse_model_output(raw_output):
         try:
             result = json.loads(match.group())
             if isinstance(result, list):
-                return [fix_spacing(s) for s in result]
+                return result
         except:
             pass
     return []
