@@ -175,7 +175,7 @@ for i, record in enumerate(test_records):
         skip_special_tokens=True,
         spaces_between_special_tokens = True
     ).strip()
-    generated = generated.replace("_", " ").strip()
+    generated = generated.replace("▁", " ").strip()
 
     results.append({
         "id":           record["messages"][0].get("id", i),
