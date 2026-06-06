@@ -14,8 +14,8 @@ from tqdm import tqdm
 
 # ── Config ────────────────────────────────────────────────────────────────────
 ADAPTER_DIR    = "./qwen_symptom_extraction"
-INPUT_CSV      = "Normalized_Testing_data.csv"
-OUTPUT_CSV     = "finetuned_qwen_predictions.csv"
+INPUT_CSV      = "LongCovid1.csv"
+OUTPUT_CSV     = "LongCovid1_finetuned_qwen_predictions.csv"
 MAX_SEQ_LEN    = 1024
 MAX_NEW_TOKENS = 256
 
@@ -101,6 +101,7 @@ def parse_model_output(raw_output):
 # ── Load testing data ─────────────────────────────────────────────────────────
 print(f"Loading {INPUT_CSV}...")
 df = pd.read_csv(INPUT_CSV)
+df = df[:10]
 print(f"  Rows: {len(df)}")
 
 # ── Run inference ─────────────────────────────────────────────────────────────
