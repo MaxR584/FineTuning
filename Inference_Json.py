@@ -75,7 +75,7 @@ def parse_model_output(raw_output):
 #─ Run Inference ───────────────────────────────────────────────────────────
 for dataset in DATASETS:
     print(f"Processing {dataset['name']}...")
-    with open(dataset["input"], 'r') as f:
+    with open(dataset["input"], 'r', encoding="utf-8") as f:
         raw_data = json.load(f)
     df = pd.DataFrame(raw_data)
     print(f"  Rows: {len(df)}")
