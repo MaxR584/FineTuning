@@ -101,7 +101,6 @@ def parse_model_output(raw_output):
 # ── Load testing data ─────────────────────────────────────────────────────────
 print(f"Loading {INPUT_CSV}...")
 df = pd.read_csv(INPUT_CSV)
-df = df[:10]
 print(f"  Rows: {len(df)}")
 
 # ── Run inference ─────────────────────────────────────────────────────────────
