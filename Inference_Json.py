@@ -11,7 +11,7 @@ MAX_NEW_TOKENS = 256
 
 DATASETS = [
     {
-        "input": "covid_pushshift_posts_20260521_115353_checkpoint.json",
+        "input": "covid_pushshift_posts_20260521_115353_checkpoint - Copy.json",
         "output": "longcovid_pushshift_1_finetuned_qwen_predictions.csv",
         "name": "long"
     }
