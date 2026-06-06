@@ -92,23 +92,24 @@ for dataset in DATASETS:
 
         for raw in batch_outputs:
             raw_outputs.append(raw)
-            extracted.append(
-                json.dumps(parse_model_output(raw))
-            )
-    df["finetuned_qwen_extracted_symptoms"] = extracted
-    df["finetuned_qwen_raw_output"] = raw_outputs
+            extracted.append(json.dumps(parse_model_output(raw)))
+
+    df.loc[:len(extracted)-1, "finetuned_qwen_raw_output"] = raw_outputs
+    df.loc[:len(extracted)-1, "finetuned_qwen_extracted_symptoms"] = extracted
+    #df["finetuned_qwen_extracted_symptoms"] = extracted
+    #df["finetuned_qwen_raw_output"] = raw_outputs
 
     df.to_csv(dataset["output"], index=False)
 
     print(f" Saved to {dataset['output']}\n")
-    
+
     print("All done")
     print("Output files:")
     for dataset in DATASETS:
         print(f" - {dataset['output']}")
-        
-        
-        
+
+
+
     '''
     for _, row in tqdm(df.iterrows(), total=len(df)):
         # Skip empty or NaN body text
