@@ -11,21 +11,29 @@ MAX_NEW_TOKENS = 256
 
 DATASETS = [
     {
-        "input": "Alpha_ChatGPT.csv",
-        "output": "Alpha_finetuned_qwen_predictions.csv",
-        "name": "Alpha"
-    },
-    {
-        "input": "Delta_ChatGPT.csv",
-        "output": "Delta_finetuned_qwen_predictions.csv",
-        "name": "Delta"
-    },
-    {
-        "input": "Omicron_ChatGPT.csv",
-        "output": "Omicron_finetuned_qwen_predictions.csv",
-        "name": "Omicron"
+        "input": "LongCovid1.csv",
+        "output": "LongCovid1_finetuned_qwen_predictions.csv",
+        "name": "Long"
     }
 ]
+    
+    #{
+     #   "input": "Alpha_ChatGPT.csv",
+      #  "output": "Alpha_finetuned_qwen_predictions.csv",
+       # "name": "Alpha"
+    #},
+    #{
+     #   "input": "Delta_ChatGPT.csv",
+      #  "output": "Delta_finetuned_qwen_predictions.csv",
+       # "name": "Delta"
+    #},
+    #{
+     #   "input": "Omicron_ChatGPT.csv",
+      #  "output": "Omicron_finetuned_qwen_predictions.csv",
+       # "name": "Omicron"
+    #}
+    
+    
 #─ Load model ───────────────────────────────────────────────────────────
 print("Loading fine-tuned model...")
 model, tokenizer = FastLanguageModel.from_pretrained(
