@@ -77,7 +77,7 @@ for dataset in DATASETS:
     print(f"Processing {dataset['name']}...")
     with open(dataset["input"], 'r') as f:
         raw_data = json.load(f)
-    df = pd.DataFrame(raw_data[:5000])
+    df = pd.DataFrame(raw_data)
     print(f"  Rows: {len(df)}")
 
     extracted = []
