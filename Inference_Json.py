@@ -8,6 +8,7 @@ from tqdm import tqdm
 ADAPTER_DIR = "./qwen_symptom_extraction"
 MAX_SEQ_LEN = 1024
 MAX_NEW_TOKENS = 256
+BATCH_SIZE = 16
 
 DATASETS = [
     {
@@ -53,7 +54,6 @@ def extract_symptoms(body_text):
     match = re.search(r'\[.*?\]', generated, re.DOTALL)
     return match.group() if match else "[]"
 
-
 def parse_model_output(raw_output):
     if not raw_output:
         return []
@@ -80,9 +80,36 @@ for dataset in DATASETS:
     df = pd.DataFrame(raw_data)
     print(f"  Rows: {len(df)}")
 
+    bodies = df["body"].fillna("").astype(str).tolist()
+
     extracted = []
     raw_outputs = []
 
+    for start in tqdm(range(0, len(bodies), BATCH_SIZE)):
+        batch = bodies[start:start + BATCH_SIZE]
+
+        batch_outputs = extract_symptoms(batch)
+
+        for raw in batch_outputs:
+            raw_outputs.append(raw)
+            extracted.append(
+                json.dumps(parse_model_output(raw))
+            )
+    df["finetuned_qwen_extracted_symptoms"] = extracted
+    df["finetuned_qwen_raw_output"] = raw_outputs
+
+    df.to_csv(dataset["output"], index=False)
+
+    print(f" Saved to {dataset['output']}\n")
+    
+    print("All done")
+    print("Output files:")
+    for dataset in DATASETS:
+        print(f" - {dataset['output']}")
+        
+        
+        
+    '''
     for _, row in tqdm(df.iterrows(), total=len(df)):
         # Skip empty or NaN body text
         if pd.isna(row["body"]) or str(row["body"]).strip() == "":
@@ -105,3 +132,4 @@ print("All done!")
 print("Output files:")
 for dataset in DATASETS:
     print(f"  - {dataset['output']}")
+'''
