@@ -12,9 +12,9 @@ BATCH_SIZE = 16
 
 DATASETS = [
     {
-        "input": "covid_pushshift_posts_20260521_115353_checkpoint - Copy.json",
-        "output": "longcovid_pushshift_1_finetuned_qwen_predictions.csv",
-        "name": "long"
+        "input": "LongCovid1.csv",
+        "output": "LongCovid1_finetuned_qwen_predictions.csv",
+        "name": "Long"
     }
 ]
 #─ Load model ───────────────────────────────────────────────────────────
@@ -75,9 +75,7 @@ def parse_model_output(raw_output):
 #─ Run Inference ───────────────────────────────────────────────────────────
 for dataset in DATASETS:
     print(f"Processing {dataset['name']}...")
-    with open(dataset["input"], 'r', encoding="utf-8") as f:
-        raw_data = json.load(f)
-    df = pd.DataFrame(raw_data)
+    df = pd.read_csv(dataset["input"])
     print(f"  Rows: {len(df)}")
 
     bodies = df["body"].fillna("").astype(str).tolist()
@@ -108,30 +106,3 @@ for dataset in DATASETS:
     print("Output files:")
     for dataset in DATASETS:
         print(f" - {dataset['output']}")
-
-
-
-    '''
-    for _, row in tqdm(df.iterrows(), total=len(df)):
-        # Skip empty or NaN body text
-        if pd.isna(row["body"]) or str(row["body"]).strip() == "":
-            extracted.append("[]")
-            raw_outputs.append("[]")
-            continue
-
-        raw = extract_symptoms(row["body"])
-        symptoms = parse_model_output(raw)
-        extracted.append(json.dumps(symptoms))
-        raw_outputs.append(raw)
-
-    df["finetuned_qwen_extracted_symptoms"] = extracted
-    df["finetuned_qwen_raw_output"] = raw_outputs
-
-    df.to_csv(dataset["output"], index=False)
-    print(f"  ✓ Saved to {dataset['output']}\n")
-
-print("All done!")
-print("Output files:")
-for dataset in DATASETS:
-    print(f"  - {dataset['output']}")
-'''
