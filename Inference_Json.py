@@ -94,12 +94,13 @@ for dataset in DATASETS:
             raw_outputs.append(raw)
             extracted.append(json.dumps(parse_model_output(raw)))
 
-    df.loc[:len(extracted)-1, "finetuned_qwen_raw_output"] = raw_outputs
-    df.loc[:len(extracted)-1, "finetuned_qwen_extracted_symptoms"] = extracted
+        df.loc[:len(extracted)-1, "finetuned_qwen_raw_output"] = raw_outputs
+        df.loc[:len(extracted)-1, "finetuned_qwen_extracted_symptoms"] = extracted
     #df["finetuned_qwen_extracted_symptoms"] = extracted
     #df["finetuned_qwen_raw_output"] = raw_outputs
 
-    df.to_csv(dataset["output"], index=False)
+        df.to_csv(dataset["output"], index=False)
+        print(f"Saved progress: {len(extracted)}/{len(df)} rows")
 
     print(f" Saved to {dataset['output']}\n")
 
