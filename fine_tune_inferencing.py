@@ -14,8 +14,8 @@ from tqdm import tqdm
 
 # ── Config ────────────────────────────────────────────────────────────────────
 ADAPTER_DIR    = "./qwen_symptom_extraction"
-INPUT_CSV      = "LongCovid1.csv"
-OUTPUT_CSV     = "LongCovid1_finetuned_qwen_predictions.csv"
+INPUT_CSV      = "LongCovid2.csv"
+OUTPUT_CSV     = "LongCovid2_finetuned_qwen_predictions.csv"
 MAX_SEQ_LEN    = 1024
 MAX_NEW_TOKENS = 256
 
